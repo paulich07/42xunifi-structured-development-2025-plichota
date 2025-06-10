@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "segmented_runs.h"
 
 // controllo che il segmento
 // - contenga almeno 3 numeri
@@ -16,7 +16,7 @@ int contains_strictly_increasing_sequence(const int *arr, int start_index, int l
         if (arr[i - 1] == (arr[i] - 1)
         && arr[i + 1] == (arr[i] + 1))
         {
-            printf("contiene sequenza: %d %d %d\n", arr[i - 1], arr[i], arr[i + 1]);
+            // printf("contiene sequenza: %d %d %d\n", arr[i - 1], arr[i], arr[i + 1]);
             return (1);
         }
         i++;
@@ -50,10 +50,10 @@ int count_segments(const int *arr, int size)
     return (count);
 }
 
-#include <stdio.h>
-int main(void)
-{
-    int arr[] = {1, 2, 3, -1, 10, 11, 13, 1, -1, 20, -1, 0, 1, -1, 1, 4, 5, 6};
-    int size = sizeof(arr) / sizeof(arr[0]);
-    printf("count = %d\n", count_segments(arr, size));
-}
+// #include <stdio.h>
+// int main(void)
+// {
+//     int arr[] = {1, 2, 3, -1, 10, 11, 13, 1, -1, 20, -1, 0, 1, -1, 1, 4, 5, 6};
+//     int size = sizeof(arr) / sizeof(arr[0]);
+//     printf("count = %d\n", count_segments(arr, size));
+// }
