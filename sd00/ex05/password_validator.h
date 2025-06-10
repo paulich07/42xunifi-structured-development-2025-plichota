@@ -1,8 +1,6 @@
 #ifndef PASSWORD_VALIDATOR_H
 # define PASSWORD_VALIDATOR_H
 
-# include <stdbool.h>
-
 typedef enum status {
     VALID,
     INVALID
