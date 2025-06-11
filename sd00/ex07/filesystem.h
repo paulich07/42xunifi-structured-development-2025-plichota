@@ -4,8 +4,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-// size == 0 se e' folder
 typedef struct node
 {
     char *name;
@@ -19,5 +19,9 @@ FSNode *create_folder(const char *name);
 void add_child(FSNode *parent, FSNode *child);
 FSNode *get_children(const FSNode *parent);
 FSNode *get_sibling(const FSNode *node);
+
+int compute_total_size(FSNode *node);
+void print_structure(const FSNode *node, int indent);
+void free_filesystem(FSNode *node);
 
 #endif
