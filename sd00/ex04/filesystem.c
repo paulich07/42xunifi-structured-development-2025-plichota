@@ -8,11 +8,7 @@ FSNode *create_file(const char *name, int size)
     if (!name)
         return (NULL);
     node = (FSNode *) malloc(sizeof(FSNode));
-    // if (!node)
-        // return (NULL);
     s = strdup(name);
-    // if (!s)
-        // return (free(node), NULL);
     node->name = s;
     node->size = size;
     node->sibiling = NULL;
@@ -39,6 +35,7 @@ void add_child(FSNode *parent, FSNode *child)
         while (curr->sibiling != NULL)
             curr = curr->sibiling;
         curr->sibiling = child;
+        return ;
     }
     parent->child = child;
 }
