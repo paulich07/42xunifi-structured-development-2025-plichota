@@ -8,14 +8,17 @@ FSNode *create_file(const char *name, int size)
     if (!name)
         return (NULL);
     node = (FSNode *) malloc(sizeof(FSNode));
-    // if (!node)
-        // return (NULL);
+    if (!node)
+        return (NULL);
     s = strdup(name);
-    // if (!s)
-        // return (free(node), NULL);
+    if (!s)
+    {
+        free(node);
+        return (NULL);
+    }
     node->name = s;
     node->size = size;
-    node->sibiling = NULL;
+    node->sibling = NULL;
     node->child = NULL;
     return (node);
 }
@@ -25,20 +28,22 @@ FSNode *create_folder(const char *name)
     return (create_file(name, 0));
 }
 
+// no duplication protection or folder/file protection
 void add_child(FSNode *parent, FSNode *child)
 {
     FSNode *curr;
 
-    if (!parent || !child)
+    if (!parent || !child || parent->size > 0)
+    {
+        printf("error adding child\n");
         return ;
-    if (parent->size > 0)
-        return ;
+    }
     if (parent->child != NULL)
     {
         curr = parent->child;
-        while (curr->sibiling != NULL)
-            curr = curr->sibiling;
-        curr->sibiling = child;
+        while (curr->sibling != NULL)
+            curr = curr->sibling;
+        curr->sibling = child;
         return ;
     }
     parent->child = child;
@@ -55,7 +60,7 @@ FSNode *get_sibling(const FSNode *node)
 {
     if (!node)
         return (NULL);
-    return (node->sibiling);
+    return (node->sibling);
 }
 
 #include <stdio.h>
@@ -74,10 +79,13 @@ int main(void)
     add_child(folder2, file3);
 
     // FSNode *curr = root;
-    // printf("name: %s, size: %d, sibiling: %p, child:%p %s \n", curr->name, curr->size, curr->sibiling, curr->child, (curr->child)->name);
+    // printf("name: %s, size: %d, sibling: %p, child:%p %s \n", curr->name, curr->size, curr->sibling, curr->child, (curr->child)->name);
     // curr = curr->child;
-    // printf("name: %s, size: %d, sibiling: %p, child:%p \n", curr->name, curr->size, curr->sibiling, curr->child);
-    // curr = curr->sibiling;
-    // printf("name: %s, size: %d, sibiling: %p, child:%p \n", curr->name, curr->size, curr->sibiling, curr->child);
+    // printf("name: %s, size: %d, sibling: %p, child:%p \n", curr->name, curr->size, curr->sibling, curr->child);
+    // curr = curr->sibling;
+    // printf("name: %s, size: %d, sibling: %p, child:%p \n", curr->name, curr->size, curr->sibling, curr->child);
     print_structure(root, 0);
+    printf("root size= %d\n", compute_total_size(root));
+    printf("folder size= %d\n", compute_total_size(folder2));
+    free_filesystem(root);
 }

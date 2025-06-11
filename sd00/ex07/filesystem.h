@@ -11,7 +11,7 @@ typedef struct node
     char *name;
     int size;
     struct node *child;
-    struct node *sibiling;
+    struct node *sibling;
 } FSNode;
 
 FSNode *create_file(const char *name, int size);
