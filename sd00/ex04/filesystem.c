@@ -7,7 +7,7 @@ FSNode *create_file(const char *name, int size)
 
     if (!name)
         return (NULL);
-    node = malloc(sizeof(FSNode));
+    node = (FSNode *) malloc(sizeof(FSNode));
     // if (!node)
         // return (NULL);
     s = strdup(name);

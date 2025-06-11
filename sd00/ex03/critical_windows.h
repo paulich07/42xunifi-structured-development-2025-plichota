@@ -5,7 +5,7 @@
 #  define RANGE 5
 # endif
 
+int is_critical(const int *readings, int start_index);
 int count_critical_windows(const int *readings, int size);
-static int is_critical(const int *readings, int start_index);
 
 #endif

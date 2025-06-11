@@ -1,6 +1,6 @@
 #include "critical_windows.h"
 
-static int is_critical(const int *readings, int start_index)
+int is_critical(const int *readings, int start_index)
 {
     int i;
     int count;
