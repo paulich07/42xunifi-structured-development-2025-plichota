@@ -11,7 +11,7 @@ FSNode *create_file(const char *name, int size)
     s = strdup(name);
     node->name = s;
     node->size = size;
-    node->sibiling = NULL;
+    node->sibling = NULL;
     node->child = NULL;
     return (node);
 }
@@ -32,9 +32,9 @@ void add_child(FSNode *parent, FSNode *child)
     if (parent->child != NULL)
     {
         curr = parent->child;
-        while (curr->sibiling != NULL)
-            curr = curr->sibiling;
-        curr->sibiling = child;
+        while (curr->sibling != NULL)
+            curr = curr->sibling;
+        curr->sibling = child;
         return ;
     }
     parent->child = child;
@@ -51,7 +51,7 @@ FSNode *get_sibling(const FSNode *node)
 {
     if (!node)
         return (NULL);
-    return (node->sibiling);
+    return (node->sibling);
 }
 
 // #include <stdio.h>
@@ -66,10 +66,10 @@ FSNode *get_sibling(const FSNode *node)
 //     add_child(file, file2);
 //     add_child(root, file2);
 
-//     // printf("name: %s, size: %d, sibiling:%s, child:%s\n", root->name, root->size, (root->sibiling)->name, (root->child)->name);
-//     // printf("name: %s, size: %d, sibiling:%s, child:%s\n", root->name, root->size, (root->sibiling)->name, (root->child)->name);
-//     printf("name: %s, size: %d, sibiling: %p, child:%p, child name:%s \n", root->name, root->size, root->sibiling, root->child, (root->child)->name);
-//     printf("name: %s, size: %d, sibiling: %p, child:%p \n", file->name, file->size, file->sibiling, file->child);
-//     file = file->sibiling;
-//     printf("name: %s, size: %d, sibiling: %p, child:%p \n", file->name, file->size, file->sibiling, file->child);
+//     // printf("name: %s, size: %d, sibling:%s, child:%s\n", root->name, root->size, (root->sibling)->name, (root->child)->name);
+//     // printf("name: %s, size: %d, sibling:%s, child:%s\n", root->name, root->size, (root->sibling)->name, (root->child)->name);
+//     printf("name: %s, size: %d, sibling: %p, child:%p, child name:%s \n", root->name, root->size, root->sibling, root->child, (root->child)->name);
+//     printf("name: %s, size: %d, sibling: %p, child:%p \n", file->name, file->size, file->sibling, file->child);
+//     file = file->sibling;
+//     printf("name: %s, size: %d, sibling: %p, child:%p \n", file->name, file->size, file->sibling, file->child);
 // }
