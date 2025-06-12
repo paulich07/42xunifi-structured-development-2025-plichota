@@ -1,13 +1,6 @@
 #ifndef GRADE_MAP_H
 # define GRADE_MAP_H
 
-typedef struct grade
-{
-    int min;
-    int max;
-    char *grade;
-} Grade;
-
 typedef const char *GradeReturn;
 
 typedef GradeReturn GradeMapper(int n);

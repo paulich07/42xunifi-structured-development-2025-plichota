@@ -15,7 +15,7 @@ float   average(const int *arr, int size)
 	sum = 0;
 	n = 0;
 	if (size <= 0 || !arr)
-		return (0);
+		return ((float) 0);
 	while (i < size)
 	{
 		if (is_between_0_and_100(arr[i]))

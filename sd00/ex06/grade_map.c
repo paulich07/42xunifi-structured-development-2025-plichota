@@ -1,15 +1,5 @@
 #include "grade_map.h"
 
-void map_scores(const int *scores, int size, GradeMapper mapper, const char **mapped_grades)
-{
-    int i = 0;
-    while (i < size)
-    {
-        mapped_grades[i] = mapper(scores[i]);
-        i++;
-    }
-}
-
 GradeReturn plusminus_mapper(int n)
 {
     if (n >= 97)
@@ -53,30 +43,40 @@ GradeReturn standard_mapper(int n)
     if (n >= 80)
         return ("B");
     if (n >= 70)
-        return ("A");
+        return ("C");
     if (n >= 60)
-        return ("A");
+        return ("D");
     return ("F");
 }
 
-#include <stdio.h>
-
-int main(void)
+void map_scores(const int *scores, int size, GradeMapper mapper, const char **mapped_grades)
 {
-    int arr[] = {100, 90, 10, 2, 55, 78, 92};
-    int size = sizeof(arr) / sizeof(arr[0]);
-    
-    GradeReturn passfail_grades[size];
-    GradeReturn standard_grades[size];
-    GradeReturn plusminus_grades[size];
-
-    map_scores(arr, size, passfail_mapper, passfail_grades);
-    map_scores(arr, size, standard_mapper, standard_grades);
-    map_scores(arr, size, plusminus_mapper, plusminus_grades);
-
-    for (int i = 0; i < size; i++)
+    int i = 0;
+    while (i < size)
     {
-        printf("score %3d   passfail %3s    standard %3s    plusminus %3s\n", 
-            arr[i], passfail_grades[i], standard_grades[i], plusminus_grades[i]);
+        mapped_grades[i] = mapper(scores[i]);
+        i++;
     }
 }
+
+// #include <stdio.h>
+
+// int main(void)
+// {
+//     int arr[] = {100, 90, 10, 2, 55, 78, 92};
+//     int size = sizeof(arr) / sizeof(arr[0]);
+    
+//     GradeReturn passfail_grades[size];
+//     GradeReturn standard_grades[size];
+//     GradeReturn plusminus_grades[size];
+
+//     map_scores(arr, size, passfail_mapper, passfail_grades);
+//     map_scores(arr, size, standard_mapper, standard_grades);
+//     map_scores(arr, size, plusminus_mapper, plusminus_grades);
+
+//     for (int i = 0; i < size; i++)
+//     {
+//         printf("score %3d   passfail %3s    standard %3s    plusminus %3s\n", 
+//             arr[i], passfail_grades[i], standard_grades[i], plusminus_grades[i]);
+//     }
+// }

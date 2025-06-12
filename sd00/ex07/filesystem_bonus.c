@@ -2,7 +2,7 @@
 
 // Recursively compute the total size of any given folder
 // including all files and nested contents
-int compute_total_size(FSNode *node)
+int compute_total_size(const FSNode *node)
 {
     int size = 0;
 
