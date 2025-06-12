@@ -31,4 +31,8 @@ struct Plan *build_plan(struct MovieList *list);
 
 struct Plan *create_movie_night_plan(void);
 
+void free_preferences(struct Preferences *preferences);
+void free_movieList(struct MovieList *movieList);
+void free_all(struct Preferences *preferences, struct MovieList *movieList);
+
 #endif
