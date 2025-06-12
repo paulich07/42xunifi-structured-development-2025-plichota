@@ -8,12 +8,15 @@ void free_confirmation(struct OrderConfirmation *confirmation)
 
 int process_food_order(struct OrderRequest *request)
 {
-    OrderConfirmation *confirmation;
-
+    struct OrderConfirmation *confirmation;
+    int success;
+    
     if (!request)
         return (0);
 
-    if (check_restaurant_status(request))
+    success = check_restaurant_status(request);
+
+    if (success)
         confirmation = create_standard_confirmation();
     else
         confirmation = create_preorder_confirmation();
@@ -22,5 +25,6 @@ int process_food_order(struct OrderRequest *request)
         return (0);
     
     send_confirmation_notification(confirmation);
-    return (free_confirmation(confirmation), 1);
+    free_confirmation(confirmation);
+    return (success);
 }
