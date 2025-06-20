@@ -11,84 +11,103 @@ UNDERLINE = \033[4;32m
 GREEN_BG = \033[42m
 
 NAME = libft.a
+BONUS_NAME = libft_bonus.a
 
-CFILES =	ft_isalpha.c \
-					ft_isdigit.c \
-					ft_isalnum.c \
-					ft_isascii.c \
-					ft_isprint.c \
-					ft_strlen.c \
-					ft_memset.c \
-					ft_bzero.c \
-					ft_memcpy.c \
-					ft_memmove.c \
-					ft_strlcpy.c \
-					ft_strlcat.c \
-					ft_tolower.c \
-					ft_toupper.c \
-					ft_strchr.c \
-					ft_strrchr.c \
-					ft_strncmp.c \
-					ft_memchr.c \
-					ft_memcmp.c \
-					ft_strnstr.c \
-					ft_atoi.c \
-					ft_calloc.c \
-					ft_strdup.c \
-					ft_substr.c \
-					ft_strjoin.c \
-					ft_strtrim.c \
-					ft_split.c \
-					ft_itoa.c \
-					ft_strmapi.c \
-					ft_striteri.c \
-					ft_putchar_fd.c \
-					ft_putstr_fd.c \
-					ft_putendl_fd.c \
-					ft_putnbr_fd.c \
+HEADERS_DIR		= include
+SRC_DIR			= src
+OBJ_DIR			= obj
 
-BONUSFILES =	ft_lstnew.c \
-							ft_lstadd_front.c \
-							ft_lstsize.c \
-							ft_lstlast.c \
-							ft_lstadd_back.c \
-							ft_lstdelone.c \
-							ft_lstclear.c \
-							ft_lstiter.c \
-							ft_lstmap.c
+SRCS = 	$(SRC_DIR)/ft_isalpha.c \
+		$(SRC_DIR)/ft_isdigit.c \
+		$(SRC_DIR)/ft_isalnum.c \
+		$(SRC_DIR)/ft_isascii.c \
+		$(SRC_DIR)/ft_isprint.c \
+		$(SRC_DIR)/ft_strlen.c \
+		$(SRC_DIR)/ft_memset.c \
+		$(SRC_DIR)/ft_bzero.c \
+		$(SRC_DIR)/ft_memcpy.c \
+		$(SRC_DIR)/ft_memmove.c \
+		$(SRC_DIR)/ft_strlcpy.c \
+		$(SRC_DIR)/ft_strlcat.c \
+		$(SRC_DIR)/ft_tolower.c \
+		$(SRC_DIR)/ft_toupper.c \
+		$(SRC_DIR)/ft_strchr.c \
+		$(SRC_DIR)/ft_strrchr.c \
+		$(SRC_DIR)/ft_strncmp.c \
+		$(SRC_DIR)/ft_memchr.c \
+		$(SRC_DIR)/ft_memcmp.c \
+		$(SRC_DIR)/ft_strnstr.c \
+		$(SRC_DIR)/ft_atoi.c \
+		$(SRC_DIR)/ft_calloc.c \
+		$(SRC_DIR)/ft_strdup.c \
+		$(SRC_DIR)/ft_substr.c \
+		$(SRC_DIR)/ft_strjoin.c \
+		$(SRC_DIR)/ft_strtrim.c \
+		$(SRC_DIR)/ft_split.c \
+		$(SRC_DIR)/ft_itoa.c \
+		$(SRC_DIR)/ft_strmapi.c \
+		$(SRC_DIR)/ft_striteri.c \
+		$(SRC_DIR)/ft_putchar_fd.c \
+		$(SRC_DIR)/ft_putstr_fd.c \
+		$(SRC_DIR)/ft_putendl_fd.c \
+		$(SRC_DIR)/ft_putnbr_fd.c \
+		$(SRC_DIR)/ft_printf.c \
+		$(SRC_DIR)/ft_putptr_fd.c \
+		$(SRC_DIR)/ft_putunbr_fd.c \
+		$(SRC_DIR)/ft_puthex_fd.c \
+		$(SRC_DIR)/get_next_line.c \
+			
+SRCS_BONUS = 	$(SRC_DIR)/ft_lstnew.c \
+				$(SRC_DIR)/ft_lstadd_front.c \
+				$(SRC_DIR)/ft_lstsize.c \
+				$(SRC_DIR)/ft_lstlast.c \
+				$(SRC_DIR)/ft_lstadd_back.c \
+				$(SRC_DIR)/ft_lstdelone.c \
+				$(SRC_DIR)/ft_lstclear.c \
+				$(SRC_DIR)/ft_lstiter.c \
+				$(SRC_DIR)/ft_lstmap.c
 
-OFILES = $(CFILES:.c=.o)
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS_BONUS = $(SRCS_BONUS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-OBONUSFILES = $(BONUSFILES:%.c=%.o)
-
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -I$(HEADERS_DIR) -I$(SRC_DIR)
 
 all: $(NAME)
+	@echo "$(GREEN)---- Building of $(NAME) ----$(RESET)";
 
-$(NAME): $(OFILES) $(OBONUSFILES)
-	@echo "$(GREEN)---- Building archive $@ ----$(RESET)"
-	@ar rcs $(NAME) $(OFILES) $(OBONUSFILES)
+$(NAME): $(OBJS)
+	@echo "$(GREEN)---- Building archive $(NAME) ----$(RESET)";
+	@ar rcs $(NAME) $(OBJS)
 
-# REGOLA IMPLICITA
-#%.o: %.c libft.h
-#	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@echo "$(YELLOW)---- Compiling $< $(RESET) into $@ ----"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-# to do rimuovere bonus
+$(OBJ_DIR):
+	@echo "$(MAGENTA)---- Create folder $@ $(RESET)"
+	@mkdir -p $(OBJ_DIR)
+
+bonus: $(BONUS_NAME)
+
+$(BONUS_NAME): $(OBJS) $(OBJS_BONUS)
+	@echo "$(GREEN)---- Building bonus of $(NAME) ----$(RESET)";
+	@ar rcs $(BONUS_NAME) $(OBJS) $(OBJS_BONUS)
+
 clean:
-	@echo "$(RED)---- Removing .o files in $(NAME) ----$(RESET)"
-	@rm -f $(OFILES) $(OBONUSFILES)
+	@echo "$(RED)---- Removing .o files in $(NAME)----$(RESET)"
+	@rm -f $(OBJS) $(OBJS_BONUS)
 
 fclean: clean
 	@if [ -n "$(NAME)" ] && [ -e "$(NAME)" ]; then \
 		echo "$(RED)---- Removing executable $(NAME)...$(RESET)"; \
 		rm -f $(NAME); \
 	fi
+	@if [ -n "$(BONUS_NAME)" ] && [ -e "$(BONUS_NAME)" ]; then \
+		echo "$(RED)---- Removing executable $(BONUS_NAME)...$(RESET)"; \
+		rm -f $(BONUS_NAME); \
+	fi
 
-bonus: $(OFILES) $(OBONUSFILES)
-	@echo "$(GREEN)---- Building bonus ----$(RESET)"
-	@ar rcs $(NAME) $(OFILES) $(OBONUSFILES)
-
-re: fclean all
+re: fclean $(NAME)
 
 .PHONY:  all clean fclean re bonus

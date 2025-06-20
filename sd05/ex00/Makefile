@@ -12,30 +12,34 @@ GREEN_BG = \033[42m
 
 NAME					= library
 
+# Paths
 HEADERS_DIR				= include
 SRC_DIR						= src
 OBJ_DIR						= obj
-LIBFT_DIR					= libs/libft
-GET_NEXT_LINE_DIR = libs/get_next_line
 
+LIBFT_DIR					= libs/libft
+LIBFT_HEADERS_DIR = $(LIBFT_DIR)/include
+
+# Compiler
 CC 						=	cc
-CFLAGS 				= -Wall -Werror -Wextra -I$(HEADERS_DIR) -I$(SRC_DIR) -I$(LIBFT_DIR) -I$(GET_NEXT_LINE_DIR)
+CFLAGS 				= -Wall -Werror -Wextra -I$(HEADERS_DIR) -I$(SRC_DIR) -I$(LIBFT_DIR) -I$(LIBFT_HEADERS_DIR)
+
+# Linker/Loader ld
 LDFLAGS 			= -L$(LIBFT_DIR) -lft
+
+# Sources
+SRCS = \
+	$(SRC_DIR)/main.c \
+	$(SRC_DIR)/core.c \
+	$(SRC_DIR)/utils.c 
+
 LIBFT					= $(LIBFT_DIR)/libft.a
+
+OBJS					= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 LIBFT_CLEAN_ENABLED ?= 1
 
-SRCS = \
-	$(SRC_DIR)/main.c \
-
-SRCS_GET_NEXT_LINE = \
-	$(GET_NEXT_LINE_DIR)/get_next_line.c \
-	$(GET_NEXT_LINE_DIR)/get_next_line_utils.c \
-
-OBJS								= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-GET_NEXT_LINE_OBJS	= $(SRCS_GET_NEXT_LINE:$(GET_NEXT_LINE_DIR)/%.c=$(OBJ_DIR)/%.o)
-
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 	@echo "$(GREEN)---- Building of $(NAME) ----$(RESET)";
 
 $(NAME): $(OBJS) $(LIBFT)
@@ -43,14 +47,10 @@ $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
 
 $(LIBFT):
-	@echo "$(BLUE)---- Building libft$(RESET)"
-	@$(MAKE) -C $(LIBFT_DIR) --quiet
+	@echo "$(YELLOW)---- Building $< $(RESET) ----> $@"
+	$(MAKE) -C $(LIBFT_DIR) --quiet
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJ_DIR)/%.o: $(GET_NEXT_LINE_DIR)/%.c | $(OBJ_DIR)
 	@echo "$(YELLOW)---- Compiling $< $(RESET) ----> $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -62,15 +62,17 @@ clean:
 	@echo "$(RED)---- Removing .o files in $(NAME)----$(RESET)"
 	@rm -rf $(OBJ_DIR)
 ifeq ($(LIBFT_CLEAN_ENABLED),1)
-		@$(MAKE) clean -C $(LIBFT_DIR) --silent
+	@echo "$(RED)---- cleaning libft =---$(RESET)"
+	@$(MAKE) clean -C $(LIBFT_DIR) --silent
 endif
 
 fclean:
-	@$(MAKE) --no-print-directory LIBFT_CLEAN_ENABLED=0 clean
 	@if [ -n "$(NAME)" ] && [ -e "$(NAME)" ]; then \
 		echo "$(RED)---- Removing executable $(NAME)...$(RESET)"; \
 		rm -f $(NAME); \
 	fi
+	@echo "$(RED)---- fcleaning libft ----$(RESET)"
+	@$(MAKE) --no-print-directory LIBFT_CLEAN_ENABLED=0 clean
 	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
 
 re: fclean all

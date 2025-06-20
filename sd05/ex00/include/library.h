@@ -34,9 +34,9 @@ void    search_by_author(t_catalog *catalog, const char *query);
 
 
 // Utilities
+int     ft_isspace(int c);
 char    *ft_trim(char *str);
-char    *ft_tolower(const char *str);
-int     ft_strnstr(const char *haystack, const char *needle);
+char    *ft_str_tolower(const char *str);
 int     is_valid_input(const char *input);
 int     is_empty_line(const char *str);
 void    print_book(const t_book *book);
