@@ -6,7 +6,7 @@
 /*   By: plichota <plichota@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 11:58:33 by plichota          #+#    #+#             */
-/*   Updated: 2025/06/20 12:05:05 by plichota         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:11:42 by plichota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,19 +99,19 @@ void search_by_title(t_catalog *catalog, const char *query)
 
     while (curr)
     {
-        char *t_lower = ft_str_tolower(curr->title);
-        if (ft_strnstr(t_lower, q_lower, ft_strlen(t_lower)))
-        {
-            print_book(curr);
-            found = 1;
-        }
-        free(t_lower);
-        curr = curr->next;
+      char *t_lower = ft_str_tolower(curr->title);
+      if (ft_strnstr(t_lower, q_lower, ft_strlen(t_lower)))
+      {
+        print_book(curr);
+        found = 1;
+      }
+      free(t_lower);
+      curr = curr->next;
     }
     free(q_lower);
 
     if (!found)
-        ft_printf("No matching books by title.\n");
+      ft_printf("No matching books by title.\n");
 }
 
 void search_by_author(t_catalog *catalog, const char *query)
